@@ -1,5 +1,5 @@
 module breath_led (
-    input clk,
+    input clk, // 时钟脉冲周期为20ns
     input rst_n,
     output pwm
 );
@@ -9,8 +9,8 @@ module breath_led (
     reg  cnt_4; // s
     reg flag;
 
-    always @(posedge clk or negedge rst_n) begin
-        if(!rst_n)
+    always @(posedge clk or negedge rst_n) begin // 每50下脉冲为1us，每过1us  cnt_1清零
+        if(!rst_n)                              // 该always块仅负责cnt_1的循环从0~49
             cnt_1 <= 6'b0;
         else begin
             if(cnt_1 == 49)        
@@ -20,7 +20,7 @@ module breath_led (
         end
     end
     
-    always @(posedge clk or negedge rst_n) begin
+    always @(posedge clk or negedge rst_n) begin // cnt_1为49时，cnt_2加一，为us计数器
         if(!rst_n)
             cnt_2 <= 10'b0;
         else begin
@@ -34,7 +34,7 @@ module breath_led (
         end
     end
 
-    always @(posedge clk or negedge rst_n) begin
+    always @(posedge clk or negedge rst_n) begin // cnt_2为999时，cnt_3加一，为ms计数器
         if(!rst_n)
             cnt_3 <= 10'b0;
         else begin
@@ -48,7 +48,7 @@ module breath_led (
         end
     end
 
-    always @(posedge clk or negedge rst_n) begin
+    always @(posedge clk or negedge rst_n) begin // cnt_3为999时，cnt_4加一，为s计数器
         if(!rst_n)
             cnt_4 <= 1'b0;
         else begin
@@ -62,7 +62,7 @@ module breath_led (
         end
     end
 
-    always @(posedge clk or negedge rst_n) begin
+    always @(posedge clk or negedge rst_n) begin // 每秒进行一次翻转，以实现占空比从小到大再从大到小
         if(!rst_n)
             flag <= 1;
         else begin
