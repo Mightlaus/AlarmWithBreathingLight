@@ -7,12 +7,13 @@ module breath_led (
     reg [9:0] cnt_2; // us
     reg [9:0] cnt_3; // ms
     reg  cnt_4; // s
+    reg flag;
 
     always @(posedge clk or negedge rst_n) begin
         if(!rst_n)
             cnt_1 <= 6'b0;
         else begin
-            if(cnt_1 == 50)        
+            if(cnt_1 == 49)        
                 cnt_1 <= 6'b0;
             else
                 cnt_1 <= cnt_1 + 1;
@@ -23,10 +24,10 @@ module breath_led (
         if(!rst_n)
             cnt_2 <= 10'b0;
         else begin
-            if(cnt_2 == 1000)        
+            if(cnt_2 == 999)        
                 cnt_2 <= 10'b0;
             else begin
-                if (cnt_1 == 50) begin
+                if (cnt_1 == 49) begin
                     cnt_2 <= cnt_2 + 1;
                 end
             end
@@ -37,10 +38,10 @@ module breath_led (
         if(!rst_n)
             cnt_3 <= 10'b0;
         else begin
-            if(cnt_3 == 1000)        
+            if(cnt_3 == 999)        
                 cnt_3 <= 10'b0;
             else begin
-                if (cnt_2 == 1000) begin
+                if (cnt_2 == 999) begin
                     cnt_3 <= cnt_3 + 1;
                 end
             end
@@ -54,7 +55,7 @@ module breath_led (
             if(cnt_4 == 1)        
                 cnt_4 <= 1'b0;
             else begin
-                if (cnt_3 == 1000) begin
+                if (cnt_3 == 999) begin
                     cnt_4 <= cnt_4 + 1;
                 end
             end
@@ -66,7 +67,7 @@ module breath_led (
             flag <= 1;
         else begin
             if(cnt_4 == 1)
-                flag = ~flag;
+                flag <= ~flag;
         end
     end
 
