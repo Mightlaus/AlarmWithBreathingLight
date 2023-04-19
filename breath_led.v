@@ -1,7 +1,7 @@
 module breath_led (
-    input clk;
-    input rst_n;
-    output pwm;
+    input clk,
+    input rst_n,
+    output pwm
 );
     reg [5:0] cnt_1; // base
     reg [9:0] cnt_2; // us
