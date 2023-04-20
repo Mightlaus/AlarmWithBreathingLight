@@ -32,6 +32,9 @@ FPGA开发板的时钟周期为20ns（50MHz），即过50个脉冲后为1$\mathr
 
 ## 结果
 
+![0时刻](image/0.png)
+![1.34s时刻](image/134.png)
+![2.68s时刻](image/268.png)
 
 ## TODO LIST
 
