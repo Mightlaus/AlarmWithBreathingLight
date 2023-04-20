@@ -1,0 +1,31 @@
+`timescale 1 ns/ 1 ns
+module AWBled_vlg_tst();
+reg clk;
+reg rst_n;
+// wires                                               
+wire beep;
+wire led;
+
+AWBled i1 (
+	.beep(beep),
+	.clk(clk),
+	.led(led),
+	.rst_n(rst_n)
+);
+initial                                                
+begin                                                  
+    clk = 1'b1;
+    rst_n = 1'b0;                                                       
+    #50;
+    rst_n = 1'b1;
+
+    #3E9;
+    $stop;                
+end                                                    
+always                                                 
+begin                                                  
+    #10;
+    clk = ~clk;
+end                                                    
+endmodule
+

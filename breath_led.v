@@ -3,20 +3,20 @@ module breath_led (
     input rst_n,
     output pwm
 );
-    reg [5:0] cnt_1; // base
+    reg [6:0] cnt_1; // base
     reg [9:0] cnt_2; // us
     reg [9:0] cnt_3; // ms
     reg  cnt_4; // s
     reg flag;
 
     always @(posedge clk or negedge rst_n) begin // 每50下脉冲为1us，每过1us  cnt_1清零
-        if(!rst_n)                              // 该always块仅负责cnt_1的循环从0~49
-            cnt_1 <= 6'b0;
+        if(!rst_n)                              
+            cnt_1 <= 7'b0;
         else begin
-            if(cnt_1 == 49)        
-                cnt_1 <= 6'b0;
+            if(cnt_1 == 66)        
+                cnt_1 <= 7'b0;
             else
-                cnt_1 <= cnt_1 + 1;
+                cnt_1 <= cnt_1 + 7'b1;
         end
     end
     
@@ -27,8 +27,8 @@ module breath_led (
             if(cnt_2 == 999)        
                 cnt_2 <= 10'b0;
             else begin
-                if (cnt_1 == 49) begin
-                    cnt_2 <= cnt_2 + 1;
+                if (cnt_1 == 66) begin
+                    cnt_2 <= cnt_2 + 10'b1;
                 end
             end
         end
@@ -42,7 +42,7 @@ module breath_led (
                 cnt_3 <= 10'b0;
             else begin
                 if (cnt_2 == 999) begin
-                    cnt_3 <= cnt_3 + 1;
+                    cnt_3 <= cnt_3 + 10'b1;
                 end
             end
         end
@@ -56,7 +56,7 @@ module breath_led (
                 cnt_4 <= 1'b0;
             else begin
                 if (cnt_3 == 999) begin
-                    cnt_4 <= cnt_4 + 1;
+                    cnt_4 <= cnt_4 + 1'b1;
                 end
             end
         end
