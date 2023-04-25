@@ -3,24 +3,26 @@ module alarm_vlg_tst();
                                       
 reg clk;
 reg rst_n;
+reg enable;
                                               
 wire beep;
 
                         
 alarm i1 (
-
 	.beep(beep),
 	.clk(clk),
-	.rst_n(rst_n)
+	.rst_n(rst_n),
+    .enable(enable)
 );
 initial                                                
 begin                                                  
     clk = 1'b1;
     rst_n = 1'b0;
-
+    enable = 1'b0;
     #50;
     rst_n = 1'b1;
-
+    #1E9;
+    enable = 1'b1;
     #2E9;
     $stop;
 end                                                    

@@ -1,6 +1,7 @@
 module alarm (
     input clk,
     input rst_n,
+    input enable,
     output reg beep
 );
     reg [27:0] tone;
@@ -15,7 +16,8 @@ module alarm (
             if(tone == 28'h FFFFFFF)
                 tone <= 28'b0;
             else
-                tone <= tone + 28'd1; 
+                if(enable) tone <= tone + 28'd1; 
+                else tone <= tone;
         end
     end
 
@@ -39,7 +41,8 @@ module alarm (
             if(cnt == clkdriver)
                 cnt <= 15'b0;
             else
-                cnt <= cnt + 15'd1;
+                if(enable) cnt <= cnt + 15'd1;
+                else cnt <= cnt;
         end
     end
 

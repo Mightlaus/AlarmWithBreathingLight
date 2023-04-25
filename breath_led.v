@@ -1,6 +1,7 @@
 module breath_led (
     input clk, // 时钟脉冲周期为20ns
     input rst_n,
+    input enable,
     output pwm
 );
     reg [6:0] cnt_1; // base
@@ -16,7 +17,8 @@ module breath_led (
             if(cnt_1 == 66)        
                 cnt_1 <= 7'b0;
             else
-                cnt_1 <= cnt_1 + 7'b1;
+                if(enable) cnt_1 <= cnt_1 + 7'b1;
+                else cnt_1 <= cnt_1;
         end
     end
     
@@ -30,6 +32,7 @@ module breath_led (
                 if (cnt_1 == 66) begin
                     cnt_2 <= cnt_2 + 10'b1;
                 end
+                else cnt_2 <= cnt_2;
             end
         end
     end
@@ -44,6 +47,7 @@ module breath_led (
                 if (cnt_2 == 999) begin
                     cnt_3 <= cnt_3 + 10'b1;
                 end
+                else cnt_3 <= cnt_3;
             end
         end
     end
@@ -58,6 +62,7 @@ module breath_led (
                 if (cnt_3 == 999) begin
                     cnt_4 <= cnt_4 + 1'b1;
                 end
+                else cnt_4 <= cnt_4;
             end
         end
     end
@@ -68,6 +73,8 @@ module breath_led (
         else begin
             if(cnt_4 == 1)
                 flag <= ~flag;
+            else 
+                flag <= flag;
         end
     end
 
